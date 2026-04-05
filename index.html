@@ -1,11 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <script type="text/javascript" src="./script.js"></script>
-</body>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Тестирование</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Невский проспект: Путь стажёра</h1>
+
+    <div class="test-controls">
+      <button onclick="runTest(1)">Тест 1</button>
+      <button onclick="runTest(2)">Тест 2</button>
+      <button onclick="runTest(3)">Тест 3</button>
+      <button onclick="runTest(4)">Тест 4</button>
+      <button onclick="runTest(5)">Тест 5</button>
+      <button onclick="runTest(6)">Тест 6</button>
+    </div>
+
+    <div class="street" id="street"></div>
+
+    <div class="result-panel">
+      Максимальное расстояние: <span id="max-result">0</span>
+    </div>
+
+    <div class="legend">
+      <span>🏠 Жилой дом (1)</span>
+      <span>🏢 Офис (2)</span>
+      <span>🌳 Другое (0)</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

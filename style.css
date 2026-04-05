@@ -1,0 +1,109 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f0f2f5;
+    padding: 40px;
+}
+
+.street {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.building {
+    width: 65px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    user-select: none;
+}
+
+.building:hover {
+    transform: translateY(-5px);
+    border-color: #3498db;
+}
+
+.icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.index {
+    font-size: 11px;
+    color: #bbb;
+    position: absolute;
+    top: 4px;
+    left: 6px;
+}
+
+.dist {
+    font-weight: bold;
+    color: #e74c3c;
+    font-size: 14px;
+}
+
+
+.type-1 { background-color: #fffde7; border-color: #f1c40f; }
+.type-2 { background-color: #e3f2fd; border-color: #3498db; }
+.type-0 { background-color: #f1f8e9; border-color: #8bc34a; }
+
+.result-panel {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 22px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#max-result {
+    color: #f1c40f;
+    font-weight: bold;
+}
+
+.legend {
+    margin-top: 30px;
+    display: flex;
+    gap: 25px;
+    font-size: 14px;
+    color: #666;
+}
+
+.test-controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background: #e3f2fd;
+    border-color: #3498db;
+}
+
+.building.highlight-max {
+    border: 3px solid #e74c3c;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
+}

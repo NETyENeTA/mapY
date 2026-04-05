@@ -1,42 +1,92 @@
-function findMaxDistance(buildings) {
+function getMaxDistance(buildings) {
   const offices = [];
   const houses = [];
 
-  // 1. Собираем индексы всех офисов и жилых домов
   buildings.forEach((type, index) => {
     if (type === 2) offices.push(index);
     if (type === 1) houses.push(index);
   });
 
-  let maxMinDistance = 0;
+  if (offices.length === 0 || houses.length === 0) return 0;
 
-  // 2. Для каждого дома ищем расстояние до ближайшего офиса
-  houses.forEach((houseIndex) => {
-    let minDistanceToOffice = Infinity;
-
-    offices.forEach((officeIndex) => {
-      const distance = Math.abs(houseIndex - officeIndex);
-      if (distance < minDistanceToOffice) {
-        minDistanceToOffice = distance;
-      }
-    });
-
-    // 3. Обновляем максимальное расстояние среди всех домов
-    if (minDistanceToOffice > maxMinDistance) {
-      maxMinDistance = minDistanceToOffice;
-    }
+  const distances = houses.map((houseIdx) => {
+    const distsToOffices = offices.map((offIdx) => Math.abs(houseIdx - offIdx));
+    return Math.min(...distsToOffices);
   });
 
-  return maxMinDistance;
+  return Math.max(...distances);
 }
 
+let currentBuildings = [2, 0, 1, 1, 0, 1, 0, 2, 1, 2];
+
+function render() {
+  const streetEl = document.getElementById("street");
+  streetEl.innerHTML = "";
+
+  const offices = currentBuildings
+    .map((t, i) => (t === 2 ? i : -1))
+    .filter((i) => i !== -1);
+  const maxResult = getMaxDistance(currentBuildings);
+
+  currentBuildings.forEach((type, i) => {
+    const bDiv = document.createElement("div");
+    bDiv.className = `building type-${type}`;
+
+    let icon = "🌳";
+    let distLabel = "";
+
+    if (type === 1) {
+      icon = "🏠";
+      const minDist = Math.min(...offices.map((oIdx) => Math.abs(i - oIdx)));
+      distLabel = minDist;
+
+      if (minDist === maxResult && maxResult > 0)
+        bDiv.classList.add("highlight-max");
+    } else if (type === 2) {
+      icon = "🏢";
+    }
+
+    bDiv.innerHTML = `
+            <span class="index">${i}</span>
+            <span class="icon">${icon}</span>
+            <span class="dist">${distLabel}</span>
+        `;
+
+    bDiv.onclick = () => {
+      const cycle = { 1: 2, 2: 0, 0: 1 };
+      currentBuildings[i] = cycle[type];
+      render();
+    };
+
+    streetEl.appendChild(bDiv);
+  });
+
+  document.getElementById("max-result").innerText = maxResult;
+}
+
+const tests = {
+  1: [2, 0, 1, 1, 0, 1, 0, 2, 1, 2],
+  2: [1, 0, 0, 0, 2, 0, 0, 0, 0, 1],
+  3: [2, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+  4: [1, 2, 0, 1, 0, 0, 2, 1, 0, 1],
+  5: [2, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  6: [0, 0, 1, 0, 2, 0, 1, 0, 0, 2],
+};
+function runTest(num) {
+  currentBuildings = [...tests[num]];
+  render();
+}
+
+render();
+
+// old
 console.log(
-  findMaxDistance([2, 0, 1, 1, 0, 1, 0, 2, 1, 2]),
-  findMaxDistance([1, 0, 0, 0, 2, 0, 0, 0, 0, 1]),
-  findMaxDistance([2, 1, 1, 1, 1, 1, 1, 1, 1, 2]),
-  findMaxDistance([1, 2, 0, 1, 0, 0, 2, 1, 0, 1]),
-  findMaxDistance([2, 0, 0, 0, 1, 0, 0, 0, 0, 0]),
-  findMaxDistance([0, 0, 1, 0, 2, 0, 1, 0, 0, 2]),
+  getMaxDistance([2, 0, 1, 1, 0, 1, 0, 2, 1, 2]),
+  getMaxDistance([1, 0, 0, 0, 2, 0, 0, 0, 0, 1]),
+  getMaxDistance([2, 1, 1, 1, 1, 1, 1, 1, 1, 2]),
+  getMaxDistance([1, 2, 0, 1, 0, 0, 2, 1, 0, 1]),
+  getMaxDistance([2, 0, 0, 0, 1, 0, 0, 0, 0, 0]),
+  getMaxDistance([0, 0, 1, 0, 2, 0, 1, 0, 0, 2]),
 );
 
 console.log(3, 5, 4, 3, 4, 2);
